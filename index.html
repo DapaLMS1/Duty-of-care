@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duty of Care: Legal Obligations - Flashcards</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration with custom colors (Deep Violet and Lavender Palette) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-violet': '#532A8C',     /* Primary Dark Color */
+                        'muted-lavender': '#9D8ABB',  /* Secondary Accent Color */
+                        'content-bg': '#F2F2F2',      /* Very light background for content area */
+                        'check-green': '#7ABF49',     /* Vibrant Green for checkmarks */
+                    }
+                }
+            }
+        }; 
+    </script>
+
+    <style>
+        /* Apply the Inter font globally */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Changed background from light grey to white/transparent */
+            background-color: white; 
+        }
+
+        /* --- FLIP CARD STYLES --- */
+        .flip-card {
+            background-color: transparent;
+            /* Card size: use 100% height/width of grid cell, but define perspective */
+            perspective: 1000px;
+            cursor: pointer;
+            height: 300px; /* Increased height for content fit */
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s; /* Smooth flip animation */
+            transform-style: preserve-3d; /* Required for the 3D effect */
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Hide the back of the element when facing away */
+            backface-visibility: hidden;
+            border-radius: 0.75rem; /* rounded-xl equivalent */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl equivalent */
+            border: 1px solid #e5e7eb; /* Subtle border for definition */
+        }
+
+        /* Front side styling (Purple / White Text) */
+        .flip-card-front {
+            background-color: #532A8C; /* deep-violet */ 
+            color: white;
+            z-index: 2;
+        }
+
+        /* Back side styling (White / Purple Text) - INVERTED */
+        .flip-card-back {
+            background-color: white; /* Changed to White */
+            color: #532A8C; /* Changed to deep-violet */
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-6xl overflow-hidden">
+        
+        <!-- Header Section (White Background, Purple Text, Centered, SHADOW REMOVED) -->
+        <div class="p-6 md:p-8 bg-white text-deep-violet rounded-t-xl mb-8 text-center">
+            <h1 class="text-3xl font-extrabold tracking-tight">The Legal Obligation: Duty of Care</h1>
+            <p class="text-lg font-medium mt-2 opacity-90">
+                The <strong class="font-bold">Duty of Care</strong> is a legal obligation that requires dental assistants to adhere to a reasonable standard of care to prevent foreseeable harm to a patient. Click on a card to reveal its definition.
+            </p>
+        </div>
+
+        <!-- FLIP CARD GRID -->
+        <div id="card-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Card 1: Establishment -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h2 class="text-3xl font-extrabold">Establishment</h2>
+                    </div>
+                    <div class="flip-card-back text-left">
+                        <p class="text-base font-semibold">
+                            A duty of care is automatically established once a <strong>patient-healthcare provider relationship begins</strong> (e.g., when a patient attends the practice). This immediate link is the foundation of legal accountability.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Standard of Care -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h2 class="text-3xl font-extrabold">Standard of Care</h2>
+                    </div>
+                    <div class="flip-card-back text-left">
+                        <p class="text-base font-semibold">
+                            The expected standard is that of a <strong>reasonably competent dental assistant</strong> operating in the same circumstances. This means your actions are measured against what a typical, well-trained professional would do.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Breach of Duty - MODIFIED FOR TWO COLUMNS -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h2 class="text-3xl font-extrabold">Breach of Duty</h2>
+                    </div>
+                    <div class="flip-card-back text-left p-4">
+                        <!-- Two-Column Container for Breach of Duty Content -->
+                        <div class="flex flex-col md:flex-row gap-4 w-full h-full items-center">
+                            
+                            <!-- Column 1: Definition Paragraph -->
+                            <div class="md:w-1/2 flex items-center">
+                                <p class="text-base font-semibold">
+                                    A breach occurs when an assistant <strong>fails to meet this standard</strong>, and that failure results in a predictable injury or harm to the patient.
+                                </p>
+                            </div>
+
+                            <!-- Column 2: Nested Example Box -->
+                            <div class="md:w-1/2 flex items-center w-full">
+                                <div class="text-base font-normal text-white italic bg-muted-lavender p-2 rounded w-full">
+                                    <span class="block font-semibold not-italic text-sm text-white mb-1">Examples of Potential Breach:</span>
+                                    <ul class="list-disc list-inside ml-4 space-y-1 text-sm">
+                                        <li>Failing to follow proper sterilisation procedures (leading to infection).</li>
+                                        <li>Not monitoring a patient experiencing distress.</li>
+                                        <li>Incorrect handling of sharps.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Negligence -->
+            <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h2 class="text-3xl font-extrabold">Negligence</h2>
+                    </div>
+                    <div class="flip-card-back text-left">
+                        <p class="text-base font-semibold">
+                            Negligence is a <strong>breach of the duty of care that legally results in harm</strong>. Dental assistants can be held personally responsible for negligence in certain circumstances, highlighting the importance of strict adherence to protocols.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
