@@ -61,12 +61,13 @@
             backface-visibility: hidden;
             border-radius: 0.75rem; /* rounded-xl equivalent */
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column; /* Allow content to stack */
+            align-items: flex-start; /* Align content to the left */
+            justify-content: space-between; /* Push button to the bottom */
             padding: 1.5rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl equivalent */
             border: 1px solid #e5e7eb; /* Subtle border for definition */
-            text-align: left; /* Ensure back content aligns correctly */
+            text-align: left;
         }
         
         /* Front side styling (Purple / White Text) */
@@ -74,7 +75,9 @@
             background-color: #532A8C; /* deep-violet */ 
             color: white;
             z-index: 2;
-            text-align: center; /* Center the title on the front */
+            text-align: center; 
+            align-items: center; /* Center content vertically on front */
+            justify-content: center; /* Center content horizontally on front */
         }
 
         /* Back side styling (White / Purple Text) - INVERTED */
@@ -82,6 +85,20 @@
             background-color: white;
             color: #532A8C; /* deep-violet */
             transform: rotateY(180deg);
+        }
+        
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #532A8C;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -98,10 +115,16 @@
                     <div class="flip-card-front">
                         <h2 class="text-3xl font-extrabold">Establishment</h2>
                     </div>
-                    <div class="flip-card-back text-left">
-                        <p class="text-base font-semibold">
+                    <div class="flip-card-back">
+                        <p class="text-base font-semibold mb-3">
                             A duty of care is automatically established once a <strong>patient-healthcare provider relationship begins</strong> (e.g., when a patient attends the practice). This immediate link is the foundation of legal accountability.
                         </p>
+                        <button 
+                            class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
+                            onclick="event.stopPropagation(); generateScenario('Establishment')"
+                        >
+                            Generate Scenario ✨
+                        </button>
                     </div>
                 </div>
             </div>
@@ -112,10 +135,16 @@
                     <div class="flip-card-front">
                         <h2 class="text-3xl font-extrabold">Standard of Care</h2>
                     </div>
-                    <div class="flip-card-back text-left">
-                        <p class="text-base font-semibold">
+                    <div class="flip-card-back">
+                        <p class="text-base font-semibold mb-3">
                             The expected standard is that of a <strong>reasonably competent dental assistant</strong> operating in the same circumstances. This means your actions are measured against what a typical, well-trained professional would do.
                         </p>
+                        <button 
+                            class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
+                            onclick="event.stopPropagation(); generateScenario('Standard of Care')"
+                        >
+                            Generate Scenario ✨
+                        </button>
                     </div>
                 </div>
             </div>
@@ -126,10 +155,16 @@
                     <div class="flip-card-front">
                         <h2 class="text-3xl font-extrabold">Breach of Duty</h2>
                     </div>
-                    <div class="flip-card-back text-left">
-                        <p class="text-base font-semibold">
+                    <div class="flip-card-back">
+                        <p class="text-base font-semibold mb-3">
                             A breach occurs when an assistant <strong>fails to meet this standard</strong>, and that failure results in a predictable injury or harm to the patient.
                         </p>
+                        <button 
+                            class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
+                            onclick="event.stopPropagation(); generateScenario('Breach of Duty')"
+                        >
+                            Generate Scenario ✨
+                        </button>
                     </div>
                 </div>
             </div>
@@ -140,17 +175,163 @@
                     <div class="flip-card-front">
                         <h2 class="text-3xl font-extrabold">Negligence</h2>
                     </div>
-                    <div class="flip-card-back text-left">
-                        <p class="text-base font-semibold">
+                    <div class="flip-card-back">
+                        <p class="text-base font-semibold mb-3">
                             Negligence is a <strong>breach of the duty of care that legally results in harm</strong>. Dental assistants can be held personally responsible for negligence in certain circumstances, highlighting the importance of strict adherence to protocols.
                         </p>
+                        <button 
+                            class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
+                            onclick="event.stopPropagation(); generateScenario('Negligence')"
+                        >
+                            Generate Scenario ✨
+                        </button>
                     </div>
                 </div>
             </div>
 
         </div>
+
+        <!-- LLM Output Area -->
+        <div class="mt-12 p-6 bg-content-bg rounded-xl shadow-xl border border-gray-200">
+            <h3 class="text-xl font-bold text-deep-violet mb-3" id="scenario-topic">Real-World Scenario Generator</h3>
+            
+            <div id="scenario-loading" class="hidden flex items-center space-x-3 text-deep-violet font-semibold">
+                <div class="loading-spinner"></div>
+                <span>Generating scenario...</span>
+            </div>
+
+            <div id="llm-output" class="min-h-[50px]">
+                <p class="text-gray-500 italic">Click a 'Generate Scenario ✨' button on the back of any flashcard to see a real-world example!</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Removed the flip all script -->
+    <script type="module">
+        // Global variables for Firebase setup (required by environment)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const apiKey = ""; // Canvas will inject API key
+
+        let db, auth; 
+        let userId = null;
+
+        // Utility functions and Firebase imports (required by environment)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        async function setupFirebaseAndAuth() {
+            try {
+                // setLogLevel('Debug'); // Enable for detailed Firestore logging
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                userId = auth.currentUser?.uid || crypto.randomUUID();
+            } catch (error) {
+                console.error("Firebase/Auth setup failed:", error);
+            }
+        }
+
+        window.onload = setupFirebaseAndAuth; 
+
+        // LLM Generation Logic
+        window.generateScenario = async function(topic) {
+            const outputContainer = document.getElementById('llm-output');
+            const topicDisplay = document.getElementById('scenario-topic');
+            const loadingDiv = document.getElementById('scenario-loading');
+
+            outputContainer.innerHTML = '';
+            topicDisplay.textContent = `Scenario for: ${topic}`;
+            loadingDiv.classList.remove('hidden');
+
+            const userQuery = `Generate a concise, realistic, and educational case study/scenario (3 sentences max) that illustrates the specific legal concept of: ${topic}`;
+            const systemPrompt = "You are an expert legal educator for healthcare professionals. The scenario should be grounded in the context of dental assisting or a related healthcare field. The tone must be professional and direct.";
+            
+            // Note: The model name and API key are set in the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            let response;
+            // Simple retry logic with exponential backoff
+            for (let i = 0; i < 3; i++) {
+                try {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) break;
+
+                    // Wait before retrying (1s, 2s, 4s...)
+                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, i)));
+                } catch (error) {
+                    console.warn(`Attempt ${i + 1} failed:`, error);
+                    if (i === 2) {
+                         loadingDiv.classList.add('hidden');
+                         outputContainer.innerHTML = '<p class="text-red-600">Failed to connect to the Gemini API after multiple retries.</p>';
+                         return;
+                    }
+                }
+            }
+
+            loadingDiv.classList.add('hidden');
+
+            try {
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    let text = candidate.content.parts[0].text;
+                    let sources = [];
+                    
+                    // Extract grounding sources
+                    const groundingMetadata = candidate.groundingMetadata;
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        sources = groundingMetadata.groundingAttributions
+                            .map(attribution => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title);
+                    }
+
+                    // Display text
+                    outputContainer.innerHTML = `<p class="text-gray-700">${text}</p>`;
+
+                    // Display sources
+                    if (sources.length > 0) {
+                        let sourceHtml = '<p class="text-xs mt-3 text-gray-500 font-medium">Sources:</p>';
+                        sourceHtml += '<ul class="list-disc list-inside text-xs text-gray-500 space-y-0.5">';
+                        sources.slice(0, 3).forEach(source => { // Limit to 3 sources for brevity
+                            sourceHtml += `<li><a href="${source.uri}" target="_blank" class="hover:underline">${source.title}</a></li>`;
+                        });
+                        sourceHtml += '</ul>';
+                        outputContainer.innerHTML += sourceHtml;
+                    }
+
+                } else {
+                    outputContainer.innerHTML = '<p class="text-red-600">Could not generate scenario. The model returned an empty or unexpected response.</p>';
+                }
+            } catch (e) {
+                loadingDiv.classList.add('hidden');
+                outputContainer.innerHTML = '<p class="text-red-600">An error occurred while processing the response.</p>';
+                console.error("LLM API Processing Error:", e);
+            }
+        }
+    </script>
 </body>
 </html>
