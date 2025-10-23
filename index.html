@@ -136,8 +136,9 @@
                         <h2 class="text-3xl font-extrabold">Standard of Care</h2>
                     </div>
                     <div class="flip-card-back">
+                        <!-- UPDATED TEXT APPLIED HERE -->
                         <p class="text-base font-semibold mb-3">
-                            The expected standard is that of a <strong>reasonably competent dental professional</strong> (e.g., Dental Auxiliary) operating within the scope and protocols established by AHPRA and local jurisdiction.
+                            The standard is the **National Minimum Standard** set by AHPRA and the Dental Board. It requires a **reasonably competent dental professional** (e.g., Dental Assistant) to operate strictly within the **Code of Conduct and established protocols**.
                         </p>
                         <button 
                             class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
@@ -265,8 +266,24 @@
             loadingDiv.classList.remove('hidden');
 
             // The user query is dynamically generated based on the card title clicked.
-            const userQuery = `Generate a concise, realistic, and educational case study/scenario (3 sentences max) that illustrates the specific legal concept of: ${topic} in a dental practice context.`;
+            let userQuery = `Generate a concise, realistic, and educational case study/scenario (3 sentences max) that illustrates the specific legal concept of: ${topic} in a dental practice context.`;
             
+            // --- QUERY CUSTOMIZATION LOGIC ---
+            if (topic === 'Establishment') {
+                 // NEW constraint focusing on waste management protocols vs. household waste
+                 userQuery += ` The scenario must illustrate the immediate establishment of duty of care by requiring the Dental Assistant to correctly handle and dispose of clinical waste (e.g., sharps, contaminated dressings) according to strict healthcare protocols, contrasting this with how they would handle common household trash.`;
+            } else if (topic === 'Breach of Code of Conduct') {
+                 // Constraint to focus on ethics/standards, not privacy/confidentiality
+                 userQuery += ` The scenario must focus on a breach of ethical guidelines or professional standards (e.g., scope of practice, professional relationships), and explicitly must not involve a breach of patient privacy or confidentiality.`;
+            } else if (topic === 'Standard of Care') {
+                 // Constraint to focus on a 'soft skill' failure
+                 userQuery += ` The scenario must illustrate a failure in a 'soft skill' (e.g., poor communication, inadequate documentation, or patient management) by the Dental Assistant that leads to a lapse in the expected standard of care, but not resulting in physical harm (yet).`;
+            } else if (topic === 'Negligence') {
+                 // Constraint to focus on the Dental Assistant as the sole negligent party
+                 userQuery += ` The scenario must illustrate a direct action or clear omission by the Dental Assistant alone that constitutes a breach of the duty of care and results in demonstrable patient harm (the four elements of negligence must be met by the DA's action). The dentist's role must be secondary or absent from the negligent act itself.`;
+            }
+            // ---------------------------------
+
             // The system prompt keeps the Australian context strict.
             const systemPrompt = "You are an expert legal educator for healthcare professionals. The scenario should be grounded specifically in the dental assisting or a related healthcare field. The tone must be professional and direct and reference Australian law/regulatory bodies like AHPRA or state law where relevant.";
             
