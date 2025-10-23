@@ -295,6 +295,26 @@
             }
 
             loadingDiv.classList.add('hidden');
+            
+            // IMPROVED ERROR HANDLING: Check for non-200 responses outside the loop
+            if (!response || !response.ok) {
+                let errorText = `API Request failed with status: ${response ? response.status : 'Unknown'}. Please try again later.`;
+                
+                // Attempt to get specific error message from the response body if it's JSON
+                try {
+                    const errorJson = await (response ? response.json() : Promise.resolve(null));
+                    if (errorJson && errorJson.error && errorJson.error.message) {
+                        errorText += ` Detail: ${errorJson.error.message}`;
+                    }
+                } catch (e) {
+                    // Ignore JSON parsing errors for the error body itself (it might be plain text HTML on severe errors)
+                }
+
+                outputContainer.innerHTML = `<p class="text-red-600 font-semibold">${errorText}</p>`;
+                console.error("Final API response check failed:", response);
+                return; // Exit the function if the API call failed
+            }
+
 
             try {
                 const result = await response.json();
@@ -330,11 +350,12 @@
                     }
 
                 } else {
+                    // The old error message is preserved for when the response is OK but the structure is bad
                     outputContainer.innerHTML = '<p class="text-red-600">Could not generate scenario. The model returned an empty or unexpected response.</p>';
                 }
             } catch (e) {
                 loadingDiv.classList.add('hidden');
-                outputContainer.innerHTML = '<p class="text-red-600">An error occurred while processing the response.</p>';
+                outputContainer.innerHTML = '<p class="text-red-600">An error occurred while processing the response body as JSON (e.g., malformed body).</p>';
                 console.error("LLM API Processing Error:", e);
             }
         }
