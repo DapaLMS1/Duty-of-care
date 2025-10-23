@@ -129,7 +129,7 @@
                 </div>
             </div>
 
-            <!-- Card 2: Standard of Care -->
+            <!-- Card 2: Standard of Care (Australian Context) -->
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -137,7 +137,7 @@
                     </div>
                     <div class="flip-card-back">
                         <p class="text-base font-semibold mb-3">
-                            The expected standard is that of a <strong>reasonably competent dental assistant</strong> operating in the same circumstances. This means your actions are measured against what a typical, well-trained professional would do.
+                            The expected standard in Australia is that of a <strong>reasonably competent dental professional</strong> (e.g., Dental Auxiliary) operating within the scope and protocols established by AHPRA and local jurisdiction.
                         </p>
                         <button 
                             class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
@@ -149,19 +149,19 @@
                 </div>
             </div>
 
-            <!-- Card 3: Breach of Duty -->
+            <!-- Card 3: Breach of Code of Conduct (Australian Context) -->
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <h2 class="text-3xl font-extrabold">Breach of Duty</h2>
+                        <h2 class="text-3xl font-extrabold">Breach of Code of Conduct</h2>
                     </div>
                     <div class="flip-card-back">
                         <p class="text-base font-semibold mb-3">
-                            A breach occurs when an assistant <strong>fails to meet this standard</strong>, and that failure results in a predictable injury or harm to the patient.
+                            A breach of the Code of Conduct occurs when a dental professional's actions violate the <strong>professional standards or ethical guidelines</strong> established by AHPRA and the Dental Board of Australia.
                         </p>
                         <button 
                             class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
-                            onclick="event.stopPropagation(); generateScenario('Breach of Duty')"
+                            onclick="event.stopPropagation(); generateScenario('Breach of Code of Conduct')"
                         >
                             Generate Scenario ✨
                         </button>
@@ -169,7 +169,7 @@
                 </div>
             </div>
 
-            <!-- Card 4: Negligence -->
+            <!-- Card 4: Negligence (Australian Context) -->
             <div class="flip-card" onclick="this.classList.toggle('flipped')">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -177,7 +177,7 @@
                     </div>
                     <div class="flip-card-back">
                         <p class="text-base font-semibold mb-3">
-                            Negligence is a <strong>breach of the duty of care that legally results in harm</strong>. Dental assistants can be held personally responsible for negligence in certain circumstances, highlighting the importance of strict adherence to protocols.
+                            Negligence is a <strong>breach of the duty of care that legally results in harm</strong>. Australian dental professionals can be held personally responsible for negligence, emphasizing strict adherence to AHPRA guidelines and practice protocols.
                         </p>
                         <button 
                             class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
@@ -193,7 +193,8 @@
 
         <!-- LLM Output Area -->
         <div class="mt-12 p-6 bg-content-bg rounded-xl shadow-xl border border-gray-200">
-            <h3 class="text-xl font-bold text-deep-violet mb-3" id="scenario-topic">Real-World Scenario Generator</h3>
+            <!-- UPDATED HEADING -->
+            <h3 class="text-xl font-bold text-deep-violet mb-3" id="scenario-topic">Australian Dental Practice Scenario Generator</h3>
             
             <div id="scenario-loading" class="hidden flex items-center space-x-3 text-deep-violet font-semibold">
                 <div class="loading-spinner"></div>
@@ -201,7 +202,8 @@
             </div>
 
             <div id="llm-output" class="min-h-[50px]">
-                <p class="text-gray-500 italic">Click a 'Generate Scenario ✨' button on the back of any flashcard to see a real-world example!</p>
+                <!-- UPDATED PLACEHOLDER TEXT -->
+                <p class="text-gray-500 italic">Click a 'Generate Scenario ✨' button on the back of any flashcard to see a real-world example grounded in Australian dental practice!</p>
             </div>
         </div>
     </div>
@@ -247,11 +249,15 @@
             const loadingDiv = document.getElementById('scenario-loading');
 
             outputContainer.innerHTML = '';
-            topicDisplay.textContent = `Scenario for: ${topic}`;
+            // When a specific topic is selected, update the title to reflect that
+            topicDisplay.textContent = `Australian Scenario for: ${topic}`; 
             loadingDiv.classList.remove('hidden');
 
-            const userQuery = `Generate a concise, realistic, and educational case study/scenario (3 sentences max) that illustrates the specific legal concept of: ${topic}`;
-            const systemPrompt = "You are an expert legal educator for healthcare professionals. The scenario should be grounded in the context of dental assisting or a related healthcare field. The tone must be professional and direct.";
+            // The user query is dynamically generated based on the card title clicked.
+            const userQuery = `Generate a concise, realistic, and educational case study/scenario (3 sentences max) that illustrates the specific legal concept of: ${topic} in an Australian dental practice context.`;
+            
+            // The system prompt keeps the Australian context strict.
+            const systemPrompt = "You are an expert legal educator for healthcare professionals. The scenario should be grounded specifically in the **Australian dental assisting or a related healthcare field**. The tone must be professional and direct and reference Australian law/regulatory bodies like AHPRA or state law where relevant.";
             
             // Note: The model name and API key are set in the environment
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
