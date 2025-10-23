@@ -37,7 +37,7 @@
             background-color: transparent;
             perspective: 1000px;
             cursor: pointer;
-            height: 200px; /* Adjusted height for content fit */
+            height: 230px; /* Adjusted height for content fit */
         }
 
         .flip-card-inner {
@@ -212,8 +212,12 @@
         // Global variables for Firebase setup (required by environment)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const apiKey = ""; // Canvas will inject API key
-
+        
+        // <<< FIX FOR 403 ERROR: You must replace "YOUR_GEMINI_API_KEY_HERE" with your actual key.
+        const apiKey = "AIzaSyCxGd3zfta-U2P1mMxQY334JKOxnb1sx2E"; 
+        // Note: For actual production use, storing the key client-side is a security risk. 
+        // A server-side proxy is recommended, but direct insertion is necessary for quick GitHub hosting.
+        
         let db, auth; 
         let userId = null;
 
@@ -248,6 +252,13 @@
             const topicDisplay = document.getElementById('scenario-topic');
             const loadingDiv = document.getElementById('scenario-loading');
 
+            // --- API KEY CHECK ---
+            if (apiKey === "YOUR_GEMINI_API_KEY_HERE" || apiKey.length === 0) {
+                 outputContainer.innerHTML = '<p class="text-red-600 font-bold">API Key Error: Please insert your Gemini API key in the code to enable this feature.</p>';
+                 return;
+            }
+            // ---------------------
+
             outputContainer.innerHTML = '';
             // When a specific topic is selected, update the title to reflect that
             topicDisplay.textContent = `Scenario for: ${topic}`; 
@@ -259,7 +270,7 @@
             // The system prompt keeps the Australian context strict.
             const systemPrompt = "You are an expert legal educator for healthcare professionals. The scenario should be grounded specifically in the dental assisting or a related healthcare field. The tone must be professional and direct and reference Australian law/regulatory bodies like AHPRA or state law where relevant.";
             
-            // Note: The model name and API key are set in the environment
+            // Note: The model name is fixed
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
             const payload = {
@@ -304,10 +315,11 @@
                 try {
                     const errorJson = await (response ? response.json() : Promise.resolve(null));
                     if (errorJson && errorJson.error && errorJson.error.message) {
-                        errorText += ` Detail: ${errorJson.error.message}`;
+                        // This handles the 403 specific message you received
+                        errorText += `<br>Detail: ${errorJson.error.message}`; 
                     }
                 } catch (e) {
-                    // Ignore JSON parsing errors for the error body itself (it might be plain text HTML on severe errors)
+                    // Ignore JSON parsing errors for the error body itself
                 }
 
                 outputContainer.innerHTML = `<p class="text-red-600 font-semibold">${errorText}</p>`;
