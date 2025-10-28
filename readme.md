@@ -2,7 +2,7 @@
 This repository contains an interactive learning module designed specifically for Australian dental assistants to master the fundamental legal obligation of Duty of Care. The resource uses responsive flip cards to aid in memorization and quick recall of key concepts.
 
 ✨ Features
-Interactive Flip Cards: Four core components of Duty of Care (Establishment, Standard of Care, Breach of Duty, and Negligence) are presented as interactive flashcards. Click on the front of the card to reveal the definition on the back.
+Interactive Flip Cards: Four core components of Duty of Care (Establishment, Standard of Care, Breach of Duty, and Negligence) are presented as interactive flashcards. Click on the front of the card to reveal the definition on the back. Once reversed, the definition uses Gemini to provide a real-world scenario.
 
 Targeted Content: Content is tailored for the Australian dental assistant context, using professional language.
 
@@ -29,6 +29,8 @@ HTML5: Structure and content.
 Tailwind CSS: Modern utility-first CSS framework for styling and responsive design.
 
 Vanilla JavaScript: Used minimally for handling the card flip interaction.
+
+AI: Gemini generates a response to the definition on the reverse of the card.
 
 🚀 Usage
 Since this project consists of a single HTML file, no complex build process is required.
