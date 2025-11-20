@@ -15,10 +15,10 @@
             theme: {
                 extend: {
                     colors: {
-                        'deep-violet': '#532A8C',      /* Primary Dark Color */
-                        'muted-lavender': '#9D8ABB',   /* Secondary Accent Color */
-                        'content-bg': '#F2F2F2',      /* Very light background for content area */
-                        'check-green': '#7ABF49',      /* Vibrant Green for checkmarks */
+                        'deep-violet': '#532A8C',       /* Primary Dark Color */
+                        'muted-lavender': '#9D8ABB',    /* Secondary Accent Color */
+                        'content-bg': '#F2F2F2',        /* Very light background for content area */
+                        'check-green': '#7ABF49',       /* Vibrant Green for checkmarks */
                     }
                 }
             }
@@ -138,7 +138,7 @@
                     <div class="flip-card-back">
                         <!-- UPDATED TEXT APPLIED HERE -->
                         <p class="text-base font-semibold mb-3">
-                            The standard is the **National Minimum Standard** set by AHPRA and the Dental Board. It requires a **reasonably competent dental professional** (e.g., Dental Assistant) to operate strictly within the **Code of Conduct and established protocols**.
+                            The standard is the <strong>National Minimum Standard</strong> set by AHPRA and the Dental Board. It requires a <strong>reasonably competent dental professional</strong> (e.g., Dental Assistant) to operate strictly within the <strong>Code of Conduct and established protocols</strong>.
                         </p>
                         <button 
                             class="mt-auto w-full text-white bg-deep-violet hover:bg-muted-lavender transition-colors py-2 px-4 rounded font-bold shadow-md text-sm"
@@ -214,10 +214,8 @@
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
         
-        // <<< FIX FOR 403 ERROR: You must replace "YOUR_GEMINI_API_KEY_HERE" with your actual key.
-        const apiKey = "AIzaSyCxGd3zfta-U2P1mMxQY334JKOxnb1sx2E"; 
-        // Note: For actual production use, storing the key client-side is a security risk. 
-        // A server-side proxy is recommended, but direct insertion is necessary for quick GitHub hosting.
+        // API Key setup - Empty string lets the environment inject the key securely at runtime
+        const apiKey = ""; 
         
         let db, auth; 
         let userId = null;
@@ -252,13 +250,6 @@
             const outputContainer = document.getElementById('llm-output');
             const topicDisplay = document.getElementById('scenario-topic');
             const loadingDiv = document.getElementById('scenario-loading');
-
-            // --- API KEY CHECK ---
-            if (apiKey === "YOUR_GEMINI_API_KEY_HERE" || apiKey.length === 0) {
-                 outputContainer.innerHTML = '<p class="text-red-600 font-bold">API Key Error: Please insert your Gemini API key in the code to enable this feature.</p>';
-                 return;
-            }
-            // ---------------------
 
             outputContainer.innerHTML = '';
             // When a specific topic is selected, update the title to reflect that
